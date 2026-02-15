@@ -1,0 +1,28 @@
+[workspace]
+members = [
+  "crates/nobreak-core",
+  "crates/nobreak-cli",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["supervise contributors"]
+
+[workspace.dependencies]
+anyhow = "1.0.101"
+async-trait = "0.1.89"
+chrono = { version = "0.4.42", features = ["serde"] }
+clap = { version = "4.5.58", features = ["derive"] }
+crossterm = "0.27.0"
+libloading = "0.8.9"
+ratatui = { version = "0.26.3", default-features = false, features = ["crossterm"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+serialport = "4.8.1"
+thiserror = "2.0.18"
+tokio = { version = "1.49.0", features = ["macros", "rt-multi-thread", "signal", "time"] }
+tracing = "0.1.43"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter", "fmt"] }
+udev = "0.9.3"

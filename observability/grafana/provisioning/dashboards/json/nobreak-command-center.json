@@ -1,0 +1,1474 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "ONLINE", "color": "green", "index": 0 },
+                "0": { "text": "OFFLINE", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "green", "value": 1 }
+          ] }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "sum(count_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} |= \"\\\"connected\\\":true\" [5m]) > bool 0)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Connection",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Input V Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Output V Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 5 },
+            { "color": "red", "value": 10 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 0 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m]))",
+          "queryType": "range",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "__expr__", "uid": "__expr__" },
+          "expression": "abs($B - $A)",
+          "refId": "C",
+          "type": "math"
+        }
+      ],
+      "title": "Regulation Gap |ΔV|",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 70 },
+            { "color": "red", "value": 90 }
+          ] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 0 },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json pOutput=\"metrics.pOutput\" | unwrap pOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Load Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 58.5 },
+            { "color": "green", "value": 59.5 },
+            { "color": "yellow", "value": 60.5 },
+            { "color": "red", "value": 61.5 }
+          ] },
+          "unit": "hertz"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 0 },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Freq Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "max": 100,
+          "min": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 50 },
+            { "color": "green", "value": 80 }
+          ] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 4 },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json cBattery=\"metrics.cBattery\" | unwrap cBattery [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Battery % Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 23.5 },
+            { "color": "green", "value": 24.5 },
+            { "color": "yellow", "value": 27.8 },
+            { "color": "red", "value": 28.4 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 4 },
+      "id": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vBattery=\"metrics.vBattery\" | unwrap vBattery [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Battery V Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 35 },
+            { "color": "red", "value": 50 }
+          ] },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 4 },
+      "id": 9,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json temperature=\"metrics.temperature\" | unwrap temperature [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Temp Now",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": { "text": "FRESH", "color": "green", "index": 0 },
+                "1": { "text": "STALE", "color": "red", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "red", "value": 1 }
+          ] }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 4 },
+      "id": 10,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showPercentChange": false,
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "sum(count_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} |= \"\\\"stale\\\":true\" [5m]) > bool 0)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Stale Samples",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 3000 },
+            { "color": "red", "value": 10000 }
+          ] },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 4 },
+      "id": 11,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json age=\"freshness.age_ms\" | unwrap age [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Freshness Age",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 300 },
+            { "color": "red", "value": 800 }
+          ] },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 4 },
+      "id": 12,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json rtt=\"freshness.rtt_ms\" | unwrap rtt [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "RTT",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "V",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true,
+            "thresholdsStyle": { "mode": "line" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 8 },
+      "id": 13,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "min", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Input Voltage (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 8 },
+      "id": 14,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Input Voltage (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "V",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true,
+            "thresholdsStyle": { "mode": "line" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 15 },
+      "id": 15,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "min", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Output Voltage (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 100 },
+            { "color": "green", "value": 105 },
+            { "color": "yellow", "value": 130 },
+            { "color": "red", "value": 140 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 15 },
+      "id": 16,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Output Voltage (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": true,
+            "axisColorMode": "text",
+            "axisLabel": "V",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 6,
+            "gradientMode": "none",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 5 },
+            { "color": "red", "value": 10 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 22 },
+      "id": 17,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [$__interval]))",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [$__interval]))",
+          "queryType": "range",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "__expr__", "uid": "__expr__" },
+          "expression": "$B - $A",
+          "refId": "C",
+          "type": "math"
+        }
+      ],
+      "title": "Voltage Regulation ΔV (Output - Input)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Swing",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 5 },
+            { "color": "red", "value": 10 }
+          ] }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Freq swing (5m)" },
+            "properties": [
+              { "id": "unit", "value": "hertz" }
+            ]
+          },
+          {
+            "matcher": { "id": "byRegexp", "options": "(Input|Output) swing \\\\(5m\\\\)" },
+            "properties": [
+              { "id": "unit", "value": "volt" }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 22 },
+      "id": 18,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(max_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m])) - avg(min_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vInput=\"metrics.vInput\" | unwrap vInput [5m]))",
+          "legendFormat": "Input swing (5m)",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(max_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m])) - avg(min_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vOutput=\"metrics.vOutput\" | unwrap vOutput [5m]))",
+          "legendFormat": "Output swing (5m)",
+          "queryType": "range",
+          "refId": "B"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(max_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [5m])) - avg(min_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [5m]))",
+          "legendFormat": "Freq swing (5m)",
+          "queryType": "range",
+          "refId": "C"
+        }
+      ],
+      "title": "Oscillation / Swing (5m)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Hz",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "hertz"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 29 },
+      "id": 19,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "min", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Output Frequency (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 58.5 },
+            { "color": "green", "value": 59.5 },
+            { "color": "yellow", "value": 60.5 },
+            { "color": "red", "value": 61.5 }
+          ] },
+          "unit": "hertz"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 29 },
+      "id": 20,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json fOutput=\"metrics.fOutput\" | unwrap fOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Output Frequency (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "%",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true,
+            "thresholdsStyle": { "mode": "line" }
+          },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 70 },
+            { "color": "red", "value": 90 }
+          ] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 36 },
+      "id": 21,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json pOutput=\"metrics.pOutput\" | unwrap pOutput [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json pOutput=\"metrics.pOutput\" | unwrap pOutput [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Output Load (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 70 },
+            { "color": "red", "value": 90 }
+          ] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 36 },
+      "id": 22,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json pOutput=\"metrics.pOutput\" | unwrap pOutput [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Output Load (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "%",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 43 },
+      "id": 23,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json cBattery=\"metrics.cBattery\" | unwrap cBattery [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json cBattery=\"metrics.cBattery\" | unwrap cBattery [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Battery Charge (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 50 },
+            { "color": "green", "value": 80 }
+          ] },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 43 },
+      "id": 24,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json cBattery=\"metrics.cBattery\" | unwrap cBattery [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Battery Charge (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "V",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 50 },
+      "id": 25,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "min", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vBattery=\"metrics.vBattery\" | unwrap vBattery [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vBattery=\"metrics.vBattery\" | unwrap vBattery [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Battery Voltage (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "red", "value": null },
+            { "color": "yellow", "value": 23.5 },
+            { "color": "green", "value": 24.5 },
+            { "color": "yellow", "value": 27.8 },
+            { "color": "red", "value": 28.4 }
+          ] },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 50 },
+      "id": 26,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json vBattery=\"metrics.vBattery\" | unwrap vBattery [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Battery Voltage (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "°C",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 18, "x": 0, "y": 57 },
+      "id": 27,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "min", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json temperature=\"metrics.temperature\" | unwrap temperature [$__interval]))",
+          "legendFormat": "Raw",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(avg_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json temperature=\"metrics.temperature\" | unwrap temperature [5m]))",
+          "legendFormat": "Smoothed (5m)",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Temperature (Pure + Smooth)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "yellow", "value": 35 },
+            { "color": "red", "value": 50 }
+          ] },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 57 },
+      "id": 28,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "line",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json temperature=\"metrics.temperature\" | unwrap temperature [5m]))",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Temperature (Current)",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "ms",
+            "axisPlacement": "auto",
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "opacity",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 3,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 64 },
+      "id": 29,
+      "options": {
+        "legend": { "calcs": ["lastNotNull", "mean", "max"], "displayMode": "table", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "multi", "sort": "none" }
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json age=\"freshness.age_ms\" | unwrap age [$__interval]))",
+          "legendFormat": "Freshness Age",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "avg(last_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} | json rtt=\"freshness.rtt_ms\" | unwrap rtt [$__interval]))",
+          "legendFormat": "RTT",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Telemetry Health (Age + RTT)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "1": { "text": "EXPERIMENTAL", "color": "green", "index": 0 },
+                "0": { "text": "UNKNOWN", "color": "yellow", "index": 1 }
+              }
+            }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "yellow", "value": null },
+            { "color": "green", "value": 1 }
+          ] }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 7, "w": 6, "x": 12, "y": 64 },
+      "id": 30,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showPercentChange": false,
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "sum(count_over_time({job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"} |= \"\\\"metricsConfidence\\\":\\\"experimental\\\"\" [5m]) > bool 0)",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Metrics Confidence",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 64 },
+      "id": 31,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "editorMode": "code",
+          "expr": "{job=\"nobreak-export\",device_id=~\"${device:regex}|.*\"}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Recent Telemetry Logs",
+      "type": "logs"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": [
+    "nobreak",
+    "ups",
+    "loki"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "loki"
+        },
+        "definition": "label_values({job=\"nobreak-export\"}, device_id)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Device",
+        "multi": false,
+        "name": "device",
+        "options": [],
+        "query": {
+          "query": "label_values({job=\"nobreak-export\"}, device_id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Nobreak Command Center",
+  "uid": "nobreak-command-center",
+  "version": 1,
+  "weekStart": ""
+}

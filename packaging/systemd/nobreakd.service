@@ -1,0 +1,17 @@
+[Unit]
+Description=Nobreak RagTech monitor daemon (read-only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobreak
+Group=nobreak
+WorkingDirectory=/opt/nobreak
+ExecStart=/opt/nobreak/nobreakd run --format ndjson --vendor-dir /opt/nobreak/vendor
+Restart=always
+RestartSec=1
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

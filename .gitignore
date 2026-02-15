@@ -1,0 +1,16 @@
+supervise-reverse-engineer.md
+
+# Rust build artifacts
+target/
+
+# Local vendor runtime blobs (proprietary .so drops)
+vendor/
+
+# Runtime/debug outputs
+*.log
+*.jsonl
+
+# Local environment overrides
+.env
+.env.*
+.mise.local.toml

@@ -1,0 +1,5 @@
+# RagTech CDC
+SUBSYSTEM=="tty", ATTRS{idVendor}=="04d8", ATTRS{idProduct}=="000a", MODE="0660", GROUP="nobreak"
+
+# RagTech HID
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0425", ATTRS{idProduct}=="0301", MODE="0660", GROUP="nobreak"

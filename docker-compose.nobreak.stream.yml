@@ -1,0 +1,15 @@
+services:
+  nobreak-run:
+    image: supervise/nobreakd:local
+    build:
+      context: .
+      dockerfile: Dockerfile.nobreak
+    command:
+      - run
+      - --format
+      - ndjson
+    environment:
+      RUST_LOG: info
+    devices:
+      - ${NOBREAK_DEVICE:-/dev/ttyACM0}:${NOBREAK_DEVICE:-/dev/ttyACM0}
+    restart: unless-stopped

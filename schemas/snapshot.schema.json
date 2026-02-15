@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/schemas/nobreak-snapshot.schema.json",
+  "title": "Nobreak Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ts",
+    "mono_ms",
+    "device",
+    "freshness",
+    "status",
+    "vars",
+    "quality"
+  ],
+  "properties": {
+    "ts": { "type": "string", "format": "date-time" },
+    "mono_ms": { "type": "integer", "minimum": 0 },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "model", "transport", "connected"],
+      "properties": {
+        "id": { "type": "string" },
+        "model": { "type": "string" },
+        "connected": { "type": "boolean" },
+        "transport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "path", "vid", "pid"],
+          "properties": {
+            "type": { "type": "string", "enum": ["cdc", "hid", "unknown"] },
+            "path": { "type": "string" },
+            "vid": { "type": "string" },
+            "pid": { "type": "string" }
+          }
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rtt_ms", "age_ms", "stale", "last_ok_ts"],
+      "properties": {
+        "rtt_ms": { "type": "integer", "minimum": 0 },
+        "age_ms": { "type": "integer", "minimum": 0 },
+        "stale": { "type": "boolean" },
+        "last_ok_ts": {
+          "oneOf": [
+            { "type": "string", "format": "date-time" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "failures"],
+      "properties": {
+        "code": { "type": "string" },
+        "failures": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "vars": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "null"]
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "poll_ms",
+        "stale_seconds",
+        "reads_ok",
+        "reads_err",
+        "reconnects",
+        "effective_interval_ms"
+      ],
+      "properties": {
+        "poll_ms": { "type": "integer", "minimum": 0 },
+        "stale_seconds": { "type": "number", "minimum": 0 },
+        "reads_ok": { "type": "integer", "minimum": 0 },
+        "reads_err": { "type": "integer", "minimum": 0 },
+        "reconnects": { "type": "integer", "minimum": 0 },
+        "effective_interval_ms": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

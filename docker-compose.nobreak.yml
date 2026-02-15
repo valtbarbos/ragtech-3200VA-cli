@@ -1,0 +1,60 @@
+services:
+  nobreak-export:
+    build:
+      context: .
+      dockerfile: Dockerfile.nobreak
+    image: supervise/nobreakd:local
+    command:
+      - export
+      - --output-dir
+      - /data/metrics
+      - --retention-days
+      - "90"
+    environment:
+      RUST_LOG: info
+    devices:
+      - ${NOBREAK_DEVICE:-/dev/ttyACM0}:${NOBREAK_DEVICE:-/dev/ttyACM0}
+    volumes:
+      - nobreak-metrics:/data/metrics
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:2.9.8
+    command: ["-config.file=/etc/loki/config.yml"]
+    volumes:
+      - ./observability/loki-config.yml:/etc/loki/config.yml:ro
+      - loki-data:/loki
+    ports:
+      - "3100:3100"
+    restart: unless-stopped
+
+  promtail:
+    image: grafana/promtail:2.9.8
+    command: ["-config.file=/etc/promtail/config.yml"]
+    volumes:
+      - ./observability/promtail-config.yml:/etc/promtail/config.yml:ro
+      - nobreak-metrics:/data/metrics:ro
+      - promtail-data:/tmp/promtail
+    restart: unless-stopped
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - loki
+    restart: unless-stopped
+
+volumes:
+  nobreak-metrics:
+  loki-data:
+  promtail-data:
+  grafana-data:

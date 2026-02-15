@@ -21,6 +21,40 @@ cargo build --release -p nobreak-cli
 
 ## Docker
 
+### Prebuilt image (GHCR)
+
+This repository publishes a container image to GitHub Container Registry:
+
+- `ghcr.io/valtbarbos/ragtech-3200VA-cli`
+
+Common tags:
+
+- `:latest` (pushes to `main`)
+- `:vX.Y.Z` (when you push a tag like `v0.1.0`)
+
+Pull and run:
+
+```bash
+docker pull ghcr.io/valtbarbos/ragtech-3200VA-cli:latest
+
+# default CMD is `scan`
+docker run --rm ghcr.io/valtbarbos/ragtech-3200VA-cli:latest
+
+# run other subcommands
+docker run --rm ghcr.io/valtbarbos/ragtech-3200VA-cli:latest --help
+docker run --rm ghcr.io/valtbarbos/ragtech-3200VA-cli:latest watch
+```
+
+If you want to talk to a USB/serial device from inside the container, you will likely need to pass a device through:
+
+```bash
+# example: typical CDC-ACM device
+docker run --rm \
+	--device=/dev/ttyACM0 \
+	-e NOBREAK_DEVICE=/dev/ttyACM0 \
+	ghcr.io/valtbarbos/ragtech-3200VA-cli:latest probe
+```
+
 ```bash
 # exporter + loki + promtail + grafana
 docker compose -f docker-compose.nobreak.yml up -d --build
